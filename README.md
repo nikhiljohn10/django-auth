@@ -1,5 +1,7 @@
 # django-auth
 
+A minimal django example for native user authentication.
+
 ```
 # Update system
 sudo apt update && sudo apt upgrade -y && sudo apt autoremove
@@ -18,6 +20,8 @@ pip install -r requirements.txt
 
 # Edit your changes in the project
 
+# Start your postgresql server and  configure settings.py accordingly
+
 # Create migrations for django models
 ./manage.py makemigrations
 ./manage.py migrate
@@ -28,3 +32,44 @@ pip install -r requirements.txt
 # Run server
 ./manage.py runserver 0.0.0.0:8000
 ```
+
+## PostgreSQL on Docker
+
+If you want a test database, best option is a docker container of postgresql.
+
+Install Docker Engine using the guide in this [link](https://docs.docker.com/get-docker/)
+
+Add the following code at the bottom of `~/.bashrc`
+```
+function pg {
+	case $1 in
+		start )
+			docker run \
+				--name postgres_12_4 \
+				-e POSTGRES_PASSWORD=postgres \
+				-p 5432:5432 \
+				-d postgres:12.4-alpine 2>/dev/null && \
+			echo "PostgreSQL Container started" || \
+				(docker restart postgres_12_4 && \
+				echo "PostgreSQL Container restarted")
+			;;
+		stop )
+			docker stop postgres_12_4 && \
+			echo "PostgreSQL Container stopped"
+			;;
+		kill )
+			docker stop postgres_12_4 && \
+			docker rm postgres_12_4 && \
+			echo "PostgreSQL Container killed"
+			;;
+		stats )
+			docker stats postgres_12_4
+			;;
+		* )
+			echo "Invalid option. Available options: start|stop|kill|stats"
+			;;
+	esac
+}; complete -W 'start stop kill stats' pg;
+```
+
+Now open a new terminal window and use the command `pg start` to start a new container
