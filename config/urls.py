@@ -5,5 +5,6 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('', RedirectView.as_view(url='/auth/')),
     path('auth/', include('userauth.urls')),
+    path('todo/', include('todo.urls')),
     path('admin/', admin.site.urls),
 ]

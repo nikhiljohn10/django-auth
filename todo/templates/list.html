@@ -1,0 +1,20 @@
+<br><h2>Todo List</h2>
+<p><a href="{% url 'home' %}">Back</a></p>
+<hr><br>
+<form method="post">
+  <button type="submit" name="button" style="cursor:pointer;">Add</button>
+  <span>&nbsp;</span>
+  {% csrf_token %}
+  {{ form.title }}
+</form>
+<br>
+  {% for task in tasks %}
+  <p>
+    <span onclick="window.location.assign('{% url 'toggle_task' pk=task.pk %}')"  style="cursor:pointer;">
+      <input type="checkbox" name="done" {% if task.done %}checked{% endif %} >
+      {{ task.title }}
+    </span>
+  	<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span onclick="window.location.assign('{% url 'remove_task' pk=task.pk %}')" style="cursor:pointer;">&times;</span>
+  </p>
+  {% endfor %}
