@@ -1,18 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from userauth.forms import SignUpForm, LoginForm
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+from userauth.forms import SignUpForm, LoginForm
+
 
 def home(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		users = User.objects.all()
 		return render(request, 'home.html', {'users': users})
 	return render(request, 'home.html')
-
-@login_required(login_url='/auth/login/')
-def user_profile(request):
-	return render(request, 'profile.html')
 
 def user_login(request):
 	if not request.user.is_authenticated:
@@ -45,3 +43,7 @@ def user_signup(request):
 def user_logout(request):
 	logout(request)
 	return redirect('home')
+
+@login_required
+def user_profile(request):
+	return render(request, 'profile.html')
