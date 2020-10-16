@@ -4,14 +4,17 @@ from userauth.forms import SignUpForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-
 def home(request):
 	if request.user.is_authenticated and request.user.is_staff:
 		users = User.objects.all()
 		return render(request, 'home.html', {'users': users})
 	return render(request, 'home.html')
 
-def login_user(request):
+@login_required(login_url='/auth/login/')
+def user_profile(request):
+	return render(request, 'profile.html')
+
+def user_login(request):
 	if not request.user.is_authenticated:
 		form = LoginForm()
 		if request.method == 'POST':
@@ -25,7 +28,7 @@ def login_user(request):
 		return render(request, 'login.html', {'form': form})
 	return redirect('home')
 
-def signup_user(request):
+def user_signup(request):
 	form = SignUpForm()
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
@@ -39,6 +42,6 @@ def signup_user(request):
 	return render(request, 'signup.html', {'form': form})
 
 @login_required
-def logout_user(request):
+def user_logout(request):
 	logout(request)
 	return redirect('home')

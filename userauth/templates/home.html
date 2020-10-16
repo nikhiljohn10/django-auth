@@ -1,8 +1,11 @@
 <h1>Welcome</h1>
 
 {% if user.is_authenticated %}
-	<h4>Hello {{ user.username }}</h4>
-	<p><a href="{% url 'logout' %}">Logout</a></p>
+	Hello {{ user.username }}
+	<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	<a href="{% url 'profile' %}">Profile</a>
+	<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	<a href="{% url 'logout' %}">Logout</a>
 	{% if users %}<div>
 		<h2>User List</h2>
 		{% for usr in users %}
@@ -10,6 +13,7 @@
 		{% endfor %}
 	</div>{% endif %}
 {% else %}
-	<p><a href="{% url 'signup' %}">Sign Up</a></p>
-	<p><a href="{% url 'login' %}">Login</a></p>
+	<a href="{% url 'signup' %}">Sign Up</a>
+	<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	<a href="{% url 'login' %}">Login</a>
 {% endif %}
