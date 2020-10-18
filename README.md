@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 # Edit your changes in the project
 
-# Start your postgresql server and  configure settings.py accordingly
+# Start your postgresql server and configure settings.py accordingly
 
 # Create migrations for django models
 ./manage.py makemigrations
