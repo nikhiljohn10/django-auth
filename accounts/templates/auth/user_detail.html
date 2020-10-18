@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block page_title %}
+	Profile
+{% endblock %}
+
+{% block page_toolbar %}
+	<div class="btn-group mr-2">
+		<a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'profile_edit' %}">Edit</a>
+	</div>
+{% endblock %}
+
+{% block dashboard %}
+<div class="row">
+  <div class="col-md-6">
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Last login:</strong> {{ user.last_login }}</p>
+    <p><strong>Joined on:</strong> {{ user.date_joined }}</p>
+  </div>
+</div>
+{% endblock %}

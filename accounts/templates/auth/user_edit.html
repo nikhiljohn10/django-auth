@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block page_title %}
+	Edit profile
+{% endblock %}
+
+{% block page_toolbar %}
+	<div class="btn-group mr-2">
+		<a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'profile' %}">Back</a>
+	</div>
+{% endblock %}
+
+{% block dashboard %}
+ <form method="post" class="form-signin" >
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons submit='Save' reset="Cancel" %}{% endbuttons %}
+ </form>
+{% endblock %}

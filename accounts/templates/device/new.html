@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block page_title %}
+	New Two Factor Authentication
+{% endblock %}
+
+{% block page_toolbar %}
+{% endblock %}
+
+{% block dashboard %}
+ <form method="post" class="form-signin" >
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons submit='Save' reset="Cancel" %}{% endbuttons %}
+ </form>
+{% endblock %}

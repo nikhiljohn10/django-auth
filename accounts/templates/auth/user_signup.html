@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block title %}
+    Django Sign Up
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <form method="post" class="form-signup">
+                <h1 class="text-center mb-4">Sign Up</h1>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="row">
+                    <div class="col-4 offset-2 mb-3">
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-primary btn-block" href="{% url 'login' %}">Login</a>
+                    </div>
+                </div>
+                <p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
