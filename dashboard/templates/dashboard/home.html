@@ -3,9 +3,9 @@
 {% if user.is_authenticated %}
 	Hello {{ user.username }}
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	<a href="{% url 'profile' %}">Profile</a>
+	<a href="{% url 'dash:profile' %}">Profile</a>
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	<a href="{% url 'logout' %}">Logout</a>
+	<a href="{% url 'auth:logout' %}">Logout</a>
 	{% if users %}<div>
 		<h2>User List</h2>
 		{% for usr in users %}
@@ -13,7 +13,7 @@
 		{% endfor %}
 	</div>{% endif %}
 {% else %}
-	<a href="{% url 'signup' %}">Sign Up</a>
+	<a href="{% url 'auth:signup' %}">Sign Up</a>
 	<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	<a href="{% url 'login' %}">Login</a>
+	<a href="{% url 'auth:login' %}">Login</a>
 {% endif %}

@@ -23,7 +23,6 @@ pip install -r requirements.txt
 # Start your postgresql server and configure settings.py accordingly
 
 # Create migrations for django models
-./manage.py makemigrations
 ./manage.py migrate
 
 # Create super user
