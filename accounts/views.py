@@ -3,14 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from userauth.forms import SignUpForm, LoginForm
-
-
-def home(request):
-	if request.user.is_authenticated and request.user.is_staff:
-		users = User.objects.all()
-		return render(request, 'home.html', {'users': users})
-	return render(request, 'home.html')
+from accounts.forms import SignUpForm, LoginForm
 
 def user_login(request):
 	if not request.user.is_authenticated:
@@ -22,9 +15,9 @@ def user_login(request):
 				password = form.cleaned_data.get('password')
 				user = authenticate(username=username, password=password)
 				login(request, user)
-				return redirect('home')
-		return render(request, 'login.html', {'form': form})
-	return redirect('home')
+				return redirect('dash:home')
+		return render(request, 'auth/login.html', {'form': form})
+	return redirect('dash:home')
 
 def user_signup(request):
 	form = SignUpForm()
@@ -36,14 +29,10 @@ def user_signup(request):
 			password = form.cleaned_data.get('password1')
 			user = authenticate(username=username, password=password)
 			login(request, user)
-			return redirect('home')
-	return render(request, 'signup.html', {'form': form})
+			return redirect('dash:home')
+	return render(request, 'auth/signup.html', {'form': form})
 
 @login_required
 def user_logout(request):
 	logout(request)
-	return redirect('home')
-
-@login_required
-def user_profile(request):
-	return render(request, 'profile.html')
+	return redirect('dash:home')
