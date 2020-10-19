@@ -5,7 +5,9 @@
     </button>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          <span class="text-white">Welcome,</span>
+          <a class="text-white mr-4" href="{% url 'profile' %}">{{ user.username }}</a>
+          <a class="btn btn-outline-secondary" href="{% url 'logout' %}">Logout</a>
         </li>
     </ul>
   </nav>
