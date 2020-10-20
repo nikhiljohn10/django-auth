@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% with site_title='Django Auth' site_author='Nikhil John' site_description='Contribute to nikhiljohn10/django-auth development by creating an account on GitHub.' site_url='https://github.com/nikhiljohn10/django-auth' site_image='https://avatars2.githubusercontent.com/u/5616249?s=400&v=4' %}
+
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+      <!-- Primary Meta Tags -->
+      <title>{{ site_title }} - {% block title %}{% endblock %}</title>
+      <meta name="author" content="{{ site_author }}" />
+      <meta name="title" content="{{ site_title }}">
+      <meta name="description" content="{{ site_description }}">
+
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="{{ site_url }}">
+      <meta property="og:title" content="{{ site_title }}">
+      <meta property="og:description" content="{{ site_description }}">
+      <meta property="og:image" content="{{ site_image }}">
+
+      <!-- Twitter -->
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:url" content="{{ site_url }}">
+      <meta property="twitter:title" content="{{ site_title }}">
+      <meta property="twitter:description" content="{{ site_description }}">
+      <meta property="twitter:image" content="{{ site_image }}">
+
+      <link rel="apple-touch-icon"      sizes="180x180" href="/assets/img/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32"   href="/static/assets/img/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16"   href="/static/assets/img/favicon-16x16.png">
+
+    {% endwith %}
+
+    {% include 'common/styles.html' %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+
+</head>
+<body class="sb-nav-fixed">
+
+    {% include 'common/navigation.html' %}
+
+    <div id="layoutSidenav">
+
+        {% include 'common/sidebar.html' %}
+
+        <div id="layoutSidenav_content">
+
+            {% block content %}{% endblock content %}
+
+            {% include 'common/footer.html' %}
+
+        </div>
+    </div>
+
+    {% include 'common/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}{% endblock javascripts %}
+
+    </body>
+</html>
