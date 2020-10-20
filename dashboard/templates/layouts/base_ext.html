@@ -6,37 +6,21 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Django Authentication Example">
-  <meta name="author" content="Nikhil John">
-  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/apple-icon.png' %}">
-  <link rel="icon" type="image/png"          href="{% static 'assets/img/favicon.png'    %}">
+  {% include 'common/head.html' %}
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
-  <title>
-    Django Auth - {% block title %}Dashboard{% endblock %}
-  </title>
+  <link rel="canonical"                      href="http://localhost:8000/dashboard/">
+
+  <title>Django Auth - {% block title %}Dashboard{% endblock %}</title>
 
   {% include 'common/styles.html' %}
-  <!-- Specific Page CSS goes HERE  -->
+
   {% block stylesheets %}{% endblock stylesheets %}
 
 </head>
 
 <body>
-  <div id="messageboard">
-  {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert" onloadend="dismissAlert(this)">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>    
-    {% endfor %}
-  {% endif %}
-  </div>
+
+  {% include 'common/messages.html' %}
 
   {% include 'common/navigation.html' %}
 
@@ -51,13 +35,9 @@
           <div class="btn-toolbar mb-2 mb-md-0">
           	{% block page_tools %}
 	            <div class="btn-group mr-2">
-	              <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-	              <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                <a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'dash:profile' %}">{{ user.username|title }}</a>
+	              <a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'core:home' %}">Home</a>
 	            </div>
-	            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-	              <span data-feather="calendar"></span>
-	              This week
-	            </button>
           	{% endblock %}
           </div>
         </div>
@@ -65,14 +45,13 @@
         {% include 'common/sidebar.html' %}
 
         {% block content %}{% endblock %}
-    
+
       </main>
     </div>
   </div>
 
   {% include 'common/scripts.html' %}
 
-  <!-- Specific Page JS goes HERE  -->
   {% block javascripts %}{% endblock javascripts %}
 
 </body>
