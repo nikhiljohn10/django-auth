@@ -1,12 +1,9 @@
-{% extends "layouts/base.html" %}
+{% extends "./layouts/base.html" %}
 
 {% block title %} Profile {% endblock %}
 
 {% block page_tools %}
   <a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'dash:edit_profile' %}">Edit</a>
-{% endblock %}
-
-{% block page_nav %}
 {% endblock %}
 
 {% block content %}
