@@ -1,31 +1,39 @@
-<h2>Profile</h2>
-<p>
-  <strong>Username: </strong>
-  <span>{{ user.username }}</span>
-</p>
-<p>
-  <strong>First Name: </strong>
-  <span>{{ user.first_name }}</span>
-</p>
-<p>
-  <strong>Last Name: </strong>
-  <span>{{ user.last_name }}</span>
-</p>
-<p>
-  <strong>Email: </strong>
-  <span>{{ user.email }}</span>
-</p>
-<p>
-  <strong>Admin: </strong>
-  <span>{{ user.is_staff }}</span>
-</p>
-<p>
-  <strong>Joined on: </strong>
-  <span>{{ user.date_joined }}</span>
-</p>
-<p>
-  <strong>Last login: </strong>
-  <span>{{ user.last_login }}</span>
-</p>
+{% extends "layouts/base.html" %}
 
-<p><a href="{% url 'dash:home' %}">Back</a></p>
+{% block title %} Profile {% endblock %} 
+
+{% block page_tools %}
+  <a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'dash:edit_profile' %}">Edit</a>
+{% endblock %}
+
+{% block content %}
+  <p>
+    <strong>Username: </strong>
+    <span>{{ user.username }}</span>
+  </p>
+  <p>
+    <strong>First Name: </strong>
+    <span>{{ user.first_name }}</span>
+  </p>
+  <p>
+    <strong>Last Name: </strong>
+    <span>{{ user.last_name }}</span>
+  </p>
+  <p>
+    <strong>Email: </strong>
+    <span>{{ user.email }}</span>
+  </p>
+  <p>
+    <strong>Admin: </strong>
+    <span>{{ user.is_staff }}</span>
+  </p>
+  <p>
+    <strong>Joined on: </strong>
+    <span>{{ user.date_joined }}</span>
+  </p>
+  <p>
+    <strong>Last login: </strong>
+    <span>{{ user.last_login }}</span>
+  </p>
+
+{% endblock %}

@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'accounts',
     'dashboard',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -111,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-in'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = False
 
@@ -129,3 +131,5 @@ STATIC_ROOT = BASE_DIR/'static' # Added
 LOGIN_URL='/auth/login/'
 LOGIN_REDIRECT_URL='/dashboard/'
 LOGOUT_REDIRECT_URL='/auth/login/'
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month

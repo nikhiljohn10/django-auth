@@ -1,9 +1,9 @@
-<h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
-  {% for field in form %}
-    <p>
-      {{ field.label_tag }}<br>
+{% extends "./base.html" %}
+{% block content %}
+  <form class="form-signup form-group" method="post">
+    <h1 class="h3 mb-3 font-weight-normal text-center">Sign Up</h1>
+    {% csrf_token %}
+    {% for field in form %}
       {{ field }}
       {% if field.help_text %}
         <small style="color: grey">{{ field.help_text }}</small>
@@ -11,9 +11,13 @@
       {% for error in field.errors %}
         <p style="color: red">{{ error }}</p>
       {% endfor %}
-    </p>
-  {% endfor %}
-  <button type="submit">Sign up</button>
-</form>
+    {% endfor %}
+    <button class="btn btn-lg btn-primary btn-block mt-3 mb-5" type="submit">Sign Up</button>
 
-<p><a href="{% url 'dash:home' %}">Back</a></p>
+    <small>
+      <a class="text-info float-left" href="{% url 'core:home' %}">Home</a>
+      <span class="text-muted float-right">Already have an account? <a class="text-info" href="{% url 'auth:login' %}">Sign In</a></span>
+    </small>
+
+  </form>
+{% endblock %}

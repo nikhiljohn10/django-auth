@@ -1,15 +1,9 @@
-<h2>Login</h2>
-<form method="post">
-
-  {% if form.non_field_errors %}
-    {% for error in form.non_field_errors %}
-      <p>{{ error }}</p>
-    {% endfor %}
-  {% endif %}
-  {% csrf_token %}
-  {% for field in form %}
-    <p>
-      {{ field.label_tag }}<br>
+{% extends "./base.html" %}
+{% block content %}
+  <form class="form-signin form-group" method="post">
+    <h1 class="h3 mb-3 font-weight-normal text-center">Sign In</h1>
+    {% csrf_token %}
+    {% for field in form %}
       {{ field }}
       {% if field.help_text %}
         <small style="color: grey">{{ field.help_text }}</small>
@@ -17,9 +11,18 @@
       {% for error in field.errors %}
         <p style="color: red">{{ error }}</p>
       {% endfor %}
-    </p>
-  {% endfor %}
-  <button type="submit">Login</button>
-</form>
+    {% endfor %}
+    <div class="checkbox mb-3 text-center">
+      <label>
+        <input type="checkbox" id="remember_me" value="remember_me" name="remember_me"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block mb-5" type="submit">Sign In</button>
+  
+    <small>
+      <a class="text-info float-left" href="{% url 'core:home' %}">Home</a>
+      <a class="text-info float-right" href="{% url 'auth:signup' %}">Create New Account</a>
+    </small>
 
-<p><a href="{% url 'dash:home' %}">Back</a></p>
+  </form>
+{% endblock %}
