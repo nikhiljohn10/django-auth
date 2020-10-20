@@ -25,9 +25,9 @@ SECRET_KEY = '7(vh94ytfxtxa$$9edz$7fdiv8+ej2_u+d5azrfslo59cwg^$h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,10 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
-    'accounts',
-    'dashboard',
-    'core',
 ]
 
 MIDDLEWARE = [
@@ -79,12 +75,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -111,11 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-in'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'UTC'
 
-USE_I18N = False
+USE_I18N = True
 
 USE_L10N = True
 
@@ -126,10 +118,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR/'static' # Added
-
-LOGIN_URL='/auth/login/'
-LOGIN_REDIRECT_URL='/dashboard/'
-LOGOUT_REDIRECT_URL='/auth/login/'
-
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
