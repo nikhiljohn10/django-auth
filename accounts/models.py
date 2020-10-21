@@ -15,15 +15,11 @@ class User(AbstractUser):
     bio = models.TextField(blank=True, max_length=500)
     email_verified = models.BooleanField(default=False)
     picture = models.ImageField(_("Profile Picture"),
-        upload_to=profile_picture_path,
-        blank=True)
+        upload_to=profile_picture_path, blank=True)
     birthday = models.DateField(blank=True, null=True)
 
-    class Meta:
-        verbose_name_plural = "Users"
-
     def __str__(self):
-        return self.get_full_name()
+        return self.username
 
 # Following function help to delete images physically from disk after removal
 

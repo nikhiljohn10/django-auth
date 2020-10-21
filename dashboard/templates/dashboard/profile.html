@@ -8,6 +8,11 @@
 
 {% block content %}
   <p>
+    {% if user.picture %}
+    <img class="shadow-sm p-1 bg-white border rounded-circle" src="{{ user.picture.url }}" width="300" height="300">
+    {% endif %}
+  </p>
+  <p>
     <strong>Username: </strong>
     <span>{{ user.username }}</span>
   </p>

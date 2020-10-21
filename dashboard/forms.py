@@ -1,18 +1,17 @@
 
 from accounts.models import User
-# from django.contrib.auth.models import User
 from django import forms
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'birthday']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
-        self.fields['first_name'].widget = forms.TextInput(attrs={'class': 'form-control mt-3', 'placeholder': 'First Name'})
-        self.fields['last_name'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'})
-        self.fields['email'].widget = forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Email'})
-        self.fields['bio'].widget = forms.Textarea(attrs={'rows': '3', 'class': 'form-control mb-3', 'placeholder': 'Bio'})
-        self.fields['birthday'].widget = forms.DateInput(attrs={'type': 'date', 'class': 'form-control mb-3', 'placeholder': 'Date of Birth'})
+        fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'birthday', 'picture']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control mt-3', 'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
+            'email': forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Email'}),
+            'bio': forms.Textarea(attrs={'rows': '3', 'class': 'form-control mb-3', 'placeholder': 'Bio'}),
+            'birthday': forms.DateInput(attrs={'type': 'date', 'class': 'form-control mb-3', 'placeholder': 'Date of Birth'}),
+            'picture': forms.ClearableFileInput(attrs={ 'class': 'form-control mb-3', 'placeholder': 'Profile Picture'}),
+        }

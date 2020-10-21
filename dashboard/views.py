@@ -1,4 +1,3 @@
-from django.forms                   import TextInput, EmailInput
 from django.shortcuts               import render, get_object_or_404
 from django.views.generic.edit      import CreateView, UpdateView
 from django.contrib.auth.mixins     import LoginRequiredMixin
@@ -24,6 +23,3 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(User, pk=self.request.user.pk)
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
