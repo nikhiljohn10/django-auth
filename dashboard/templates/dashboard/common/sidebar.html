@@ -1,8 +1,18 @@
+{% load thumbnail %}
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
   <div class="sidebar-sticky pt-3">
-    <h5 class="h5 mb-3">
-      <span class="ml-3">Welcome, {% if user.first_name %}Mr.{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</span>
-    </h5>
+    <div class="text-center">
+      <h5 class="h5 mb-3">
+        {% if user.picture %}
+        {% thumbnail user.picture "100x100" crop="center" as img %}
+        <img class="shadow-sm p-1 bg-white border rounded-circle" src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}">
+        {% endthumbnail %}
+        {% endif %}
+      </h5>
+      <h5 class="h5 mb-3">
+        <span class="ml-3">Welcome, {% if user.first_name %}Mr.{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</span>
+      </h5>
+    </div>
     <hr>
     <ul class="nav flex-column">
 

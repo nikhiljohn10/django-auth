@@ -5,6 +5,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
+    'sorl.thumbnail',
     'accounts',
     'dashboard',
     'core',
