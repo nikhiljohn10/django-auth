@@ -6,7 +6,7 @@ from django import forms
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'dob', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'birthday', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -15,7 +15,7 @@ class SignUpForm(UserCreationForm):
         self.fields['last_name'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'})
         self.fields['email'].widget = forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Email'})
         self.fields['bio'].widget = forms.Textarea(attrs={'rows': '3', 'class': 'form-control mb-3', 'placeholder': 'Bio'})
-        self.fields['dob'].widget = forms.DateInput(attrs={'type': 'date', 'class': 'form-control mb-3', 'placeholder': 'Date of Birth'})
+        self.fields['birthday'].widget = forms.DateInput(attrs={'type': 'date', 'class': 'form-control mb-3', 'placeholder': 'Date of Birth'})
         self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'New Password'})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Confirm Password'})
 
@@ -30,17 +30,3 @@ class LoginForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
         self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Password'})
-
-
-
-class UserSignUpForm(UserCreationForm):
-
-    class Meta:
-        model = User
-        fields = ('username',)
-
-class UserUpdateForm(UserChangeForm):
-
-    class Meta:
-        model = User
-        fields = ('username',)
