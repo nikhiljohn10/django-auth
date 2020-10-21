@@ -3,11 +3,8 @@
 A minimal django example for native user authentication.
 
 ```
-# Update system
-sudo apt update && sudo apt upgrade -y && sudo apt autoremove
-
 # Install dependencies
-sudo apt install -y libpq-dev python3-dev python3-pip python3-venv
+sudo apt install -y python3-pip python3-venv
 
 # Clone project
 git clone https://github.com/nikhiljohn10/django-auth && cd django-auth
@@ -32,7 +29,29 @@ pip install -r requirements.txt
 ./manage.py runserver 0.0.0.0:8000
 ```
 
-## PostgreSQL on Docker
+## PostgreSQL
+
+#### Setup PostgreSQL
+
+Run PostgreSQL server on your system or use Docker (Instructions given in next section)
+
+Uncomment `psycopg2==2.8.6` in `requirements.txt`
+
+Uncomment `DATABASES` variable in `config/settings/custom.py` and edit the
+username and password accordingly
+
+Install dependencies using following commands:
+
+```
+# Update system
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove
+
+# Install dependencies
+sudo apt install -y libpq-dev python3-dev
+pip install -r requirements.txt
+```
+
+#### DB on Docker
 
 If you want a test database, best option is a docker container of postgresql.
 

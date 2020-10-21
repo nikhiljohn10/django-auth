@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#./manage.py dumpdata --exclude auth.permission --exclude contenttypes > user.json
+rm -rf ./config/db.sqlite3 ./accounts/migrations/0001_initial.py
+./manage.py makemigrations && \
+./manage.py migrate && \
+( ./manage.py loaddata user.json  && \
+echo "Username: admin"  && \
+echo "Password: admin@123" )  && \
+./manage.py runserver

@@ -1,6 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, UsernameField
 from accounts.models import User
-from django import forms 
+from django.utils.translation import gettext_lazy as _
+from django import forms
 
 class SignUpForm(UserCreationForm):
     class Meta:
@@ -15,8 +16,8 @@ class SignUpForm(UserCreationForm):
         self.fields['email'].widget = forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Email'})
         self.fields['bio'].widget = forms.Textarea(attrs={'rows': '3', 'class': 'form-control mb-3', 'placeholder': 'Bio'})
         self.fields['dob'].widget = forms.DateInput(attrs={'type': 'date', 'class': 'form-control mb-3', 'placeholder': 'Date of Birth'})
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'New Password'}) 
-        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Confirm Password'}) 
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'New Password'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Confirm Password'})
 
 
 class LoginForm(AuthenticationForm):
@@ -28,7 +29,7 @@ class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Password'}) 
+        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Password'})
 
 
 
@@ -36,10 +37,10 @@ class UserSignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'bio', 'dob')
+        fields = ('username',)
 
 class UserUpdateForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'bio', 'dob')
+        fields = ('username',)
