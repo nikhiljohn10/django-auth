@@ -15,7 +15,7 @@
     "bio": "I am the Django Administrator",
     "email_verified": true,
     "picture": "",
-    "dob": "2020-10-21",
+    "birthday": "2020-10-21",
     "groups": [],
     "user_permissions": []
   }
