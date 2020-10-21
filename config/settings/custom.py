@@ -41,8 +41,8 @@ USE_I18N = False
 
 STATIC_ROOT = BASE_DIR/'static'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_URL = '/assets/'
+MEDIA_ROOT = BASE_DIR.parent/'assets'
 
 LOGIN_URL='/auth/login/'
 LOGIN_REDIRECT_URL='/dashboard/'
