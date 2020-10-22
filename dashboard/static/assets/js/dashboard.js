@@ -1,7 +1,9 @@
 /* globals Chart:false, feather:false */
 
-(function () {
+(function() {
   'use strict'
   feather.replace()
-  setTimeout(function() { $(".alert-dismissible").alert('close'); }, 2000);
+  setTimeout(function() {
+    $(".alert-dismissible").alert('close');
+  }, 2000);
 })()

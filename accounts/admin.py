@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from accounts.models import User
 
+
 # Admin Forms
 
 class UserCreationAdminForm(UserCreationForm):
@@ -14,15 +15,18 @@ class UserCreationAdminForm(UserCreationForm):
         model = User
         fields = ('username',)
 
+
 class UserChangeAdminForm(UserChangeForm):
 
     class Meta:
         model = User
         fields = ('username',)
 
+
 # Admin Registeration
 
 admin.site.unregister(Group)
+
 
 @admin.register(User)
 class AdvanceUserAdmin(UserAdmin):
@@ -38,7 +42,7 @@ class AdvanceUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2'),}),
+            'fields': ('username', 'password1', 'password2'), }),
         (_('Personal info'), {
             'fields': ('first_name', 'last_name', 'email', 'bio', 'birthday', 'picture')}),
     )

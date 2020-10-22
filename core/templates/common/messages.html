@@ -1,5 +1,5 @@
 <div id="messageboard">
-{% if messages %}
+  {% if messages %}
   {% for message in messages %}
   <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert" onloadend="dismissAlert(this)">
     {{ message }}
@@ -8,5 +8,5 @@
     </button>
   </div>
   {% endfor %}
-{% endif %}
+  {% endif %}
 </div>

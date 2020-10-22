@@ -1,6 +1,6 @@
-from django.shortcuts               import render, get_object_or_404
-from django.views.generic.edit      import CreateView, UpdateView
-from django.contrib.auth.mixins     import LoginRequiredMixin
+from django.shortcuts import render, get_object_or_404
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 from dashboard.forms import ProfileForm
@@ -11,9 +11,11 @@ from accounts.models import User
 def home(request):
     return render(request, 'dashboard/home.html')
 
+
 @login_required
 def profile(request):
     return render(request, 'dashboard/profile.html')
+
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     model = User

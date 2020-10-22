@@ -1,23 +1,14 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from accounts.models import User
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
+
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'bio', 'birthday', 'password1', 'password2']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
-        self.fields['first_name'].widget = forms.TextInput(attrs={'class': 'form-control mt-3', 'placeholder': 'First Name'})
-        self.fields['last_name'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'})
-        self.fields['email'].widget = forms.TextInput(attrs={'class': 'form-control mb-3', 'placeholder': 'Email'})
-        self.fields['bio'].widget = forms.Textarea(attrs={'rows': '3', 'class': 'form-control mb-3', 'placeholder': 'Bio'})
-        self.fields['birthday'].widget = forms.DateInput(attrs={'type': 'date', 'class': 'form-control mb-3', 'placeholder': 'Date of Birth'})
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'New Password'})
-        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Confirm Password'})
+        fields = ['username', 'first_name', 'last_name',
+                  'email', 'bio', 'birthday', 'password1', 'password2']
 
 
 class LoginForm(AuthenticationForm):
@@ -28,5 +19,7 @@ class LoginForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Password'})
+        self.fields['username'].widget = forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Username'})
+        self.fields['password'].widget = forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'Password'})

@@ -3,50 +3,50 @@
 {% block title %} Profile {% endblock %}
 
 {% block page_tools %}
-  <a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'dash:profile_edit' %}">Edit</a>
+<a role="button" class="btn btn-sm btn-outline-secondary" href="{% url 'dash:profile_edit' %}">Edit</a>
 {% endblock %}
 
 {% block content %}
-  <p>
-    {% if user.picture %}
-    <img class="shadow-sm p-1 bg-white border rounded-circle" src="{{ user.picture.url }}" width="300" height="300">
-    {% endif %}
-  </p>
-  <p>
-    <strong>Username: </strong>
-    <span>{{ user.username }}</span>
-  </p>
-  <p>
-    <strong>First Name: </strong>
-    <span>{{ user.first_name }}</span>
-  </p>
-  <p>
-    <strong>Last Name: </strong>
-    <span>{{ user.last_name }}</span>
-  </p>
-  <p>
-    <strong>Bio: </strong>
-    <span>{{ user.bio }}</span>
-  </p>
-  <p>
-    <strong>Email: </strong>
-    <span>{{ user.email }}</span>
-  </p>
-  <p>
-    <strong>Date of Birth: </strong>
-    <span>{{ user.birthday }}</span>
-  </p>
-  <p>
-    <strong>Admin: </strong>
-    <span>{{ user.is_staff }}</span>
-  </p>
-  <p>
-    <strong>Joined on: </strong>
-    <span>{{ user.date_joined }}</span>
-  </p>
-  <p>
-    <strong>Last login: </strong>
-    <span>{{ user.last_login }}</span>
-  </p>
+<p>
+  {% if user.picture %}
+  <img class="shadow-sm p-1 bg-white border rounded-circle" src="{{ user.picture.url }}" width="300" height="300">
+  {% endif %}
+</p>
+<p>
+  <strong>Username: </strong>
+  <span>{{ user.username }}</span>
+</p>
+<p>
+  <strong>First Name: </strong>
+  <span>{{ user.first_name }}</span>
+</p>
+<p>
+  <strong>Last Name: </strong>
+  <span>{{ user.last_name }}</span>
+</p>
+<p>
+  <strong>Bio: </strong>
+  <span>{{ user.bio }}</span>
+</p>
+<p>
+  <strong>Email: </strong>
+  <span>{{ user.email }}</span>
+</p>
+<p>
+  <strong>Date of Birth: </strong>
+  <span>{{ user.birthday }}</span>
+</p>
+<p>
+  <strong>Admin: </strong>
+  <span>{{ user.is_staff }}</span>
+</p>
+<p>
+  <strong>Joined on: </strong>
+  <span>{{ user.date_joined }}</span>
+</p>
+<p>
+  <strong>Last login: </strong>
+  <span>{{ user.last_login }}</span>
+</p>
 
 {% endblock %}

@@ -2,27 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
-    <title>Signin Template · Bootstrap</title>
+<head>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
-    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'assets/css/signin.css' %}" rel="stylesheet">
-  </head>
+  {% include 'common/head.html' %}
+  <link rel="canonical" href="http://localhost:8000/auth/">
+  <title>Django Auth</title>
 
-  <body>
+  {% include 'common/styles.html' %}
+  <link href="{% static 'assets/css/account.css' %}" rel="stylesheet">
+</head>
 
-  {% if form.non_field_errors %}
-    {% for error in form.non_field_errors %}
-      <p>{{ error }}</p>
-    {% endfor %}
-  {% endif %}
-
+<body>
   {% block content %}{% endblock %}
-  </body>
+  {% include 'common/scripts.html' %}
+</body>
+
 </html>

@@ -43,13 +43,13 @@ TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = False
 
-STATIC_ROOT = BASE_DIR/'static'
+STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/assets/'
-MEDIA_ROOT = BASE_DIR.parent/'assets'
+MEDIA_ROOT = BASE_DIR.parent / 'assets'
 
-LOGIN_URL='/auth/login/'
-LOGIN_REDIRECT_URL='/dashboard/'
-LOGOUT_REDIRECT_URL='/auth/login/'
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/auth/login/'
 
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # One month
