@@ -5,6 +5,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
+    'crispy_forms',
     'sorl.thumbnail',
     'accounts',
     'dashboard',
@@ -31,6 +32,8 @@ MIDDLEWARE = [
 #         'PORT': '5432',
 #     }
 # }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'accounts.User'
 
