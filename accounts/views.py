@@ -1,46 +1,37 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect as redirect_url
 from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate
-from accounts.models import User
-from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import login, logout, views
 from accounts.forms import SignUpForm, LoginForm
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+
+# Custom redirection function to use next parameter from url
+def redirect(request, default='dash:home'):
+    return redirect_url(request.GET.get('next', None) or default)
 
 
-def user_login(request):
-    redirect_to = request.GET.get('next', None) or 'dash:home'
-    if not request.user.is_authenticated:
-        form = LoginForm()
-        if request.method == 'POST':
-            form = LoginForm(data=request.POST)
-            if form.is_valid():
-                username = form.cleaned_data.get('username')
-                password = form.cleaned_data.get('password')
-                user = authenticate(username=username, password=password)
-                if user is not None:
-                    if not request.POST.get('remember_me', None):
-                        request.session.set_expiry(0)
-                    login(request, user)
-                    messages.info(request, f"You are now logged in as {username}")
-                    return redirect(redirect_to)
-        return render(request, 'auth/login.html', {'form': form})
-    return redirect(redirect_to)
+class UserLogin(views.LoginView):
+    template_name = 'auth/login.html'
+    authentication_form = LoginForm
 
+    def form_valid(self, form):
+        user = form.get_user()
+        login(self.request, user)
+        if not self.request.POST.get('remember_me', None):
+            self.request.session.set_expiry(0)
+        messages.info(self.request, f"You are now logged in as {user}")
+        return redirect_url(self.get_success_url())
 
-def user_signup(request):
-    redirect_to = request.GET.get('next', None) or 'dash:home'
-    form = SignUpForm()
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect(redirect_to)
-    return render(request, 'auth/signup.html', {'form': form})
+class SignUpView(CreateView):
+    form_class = SignUpForm
+    template_name = 'auth/signup.html'
+    success_url = reverse_lazy('core:home')
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return super().form_valid(form)
 
-def user_logout(request):
-    redirect_to = request.GET.get('next', None) or 'dash:home'
-    if request.user.is_authenticated:
-        logout(request)
-    return redirect(redirect_to)
+user_login = UserLogin.as_view()
+user_signup = SignUpView.as_view()
+user_logout = views.LogoutView.as_view()
