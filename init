@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+
+[[ ! -d "venv" ]] && python3 -m venv venv
+\. ./venv/bin/activate
+
+function de {
+  find ./accounts/migrations  ! -name '__init__.py' -type f -exec rm -rf {} +
+  rm -rf ./config/db.sqlite3 ./assets
+  ./manage.py makemigrations && \
+  ./manage.py migrate && \
+  ( ./manage.py loaddata user.json  && \
+  echo -e "\x1B[33m===>\x1B[0m Username: \x1B[1;32madmin\x1B[0m"  && \
+  echo -e "\x1B[33m===>\x1B[0m Password: \x1B[1;32madmin@123\x1B[0m" ) && \
+  ./manage.py runserver
+}
+
+function dp {
+  ./manage.py dumpdata --exclude auth.permission --exclude contenttypes > db.json
+}
+
+function dr {
+  ./manage.py runserver
+}
+
+function dm {
+  ./manage.py makemigrations && ./manage.py migrate
+}
+
+function dx {
+  deactivate 2>/dev/null
+  unset -f de dd dr dm dx 2>/dev/null
+}

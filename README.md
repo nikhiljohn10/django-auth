@@ -29,6 +29,16 @@ pip install -r requirements.txt
 ./manage.py runserver 0.0.0.0:8000
 ```
 
+## Developing
+
+To initialise `. ./init`
+
+* `djr` - Run server
+* `dje` - Reset project database
+* `djp` - Dump data from database in to db.json
+* `djm` - Migrate data
+* `djx` - Deactivate virtual environment
+
 ## PostgreSQL
 
 #### Setup PostgreSQL
