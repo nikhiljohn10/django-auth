@@ -30,4 +30,38 @@ function djm {
 function djx {
   deactivate 2>/dev/null
   unset -f de dd dr dm dx 2>/dev/null
+  [ -x "$(command -v docker)" ] && unset -f pg 2>/dev/null
 }
+
+if [ -x "$(command -v docker)" ]; then
+  function pg {
+    case $1 in
+    start )
+      docker run \
+        --name postgres_12_4 \
+        -e POSTGRES_PASSWORD=postgres \
+        -p 5432:5432 \
+        -d postgres:12.4-alpine 2>/dev/null && \
+      echo "PostgreSQL Container started" || \
+      (docker restart postgres_12_4 && echo "PostgreSQL Container restarted")
+      ;;
+    stop )
+      docker stop postgres_12_4 && \
+      echo "PostgreSQL Container stopped"
+      ;;
+    kill )
+      docker stop postgres_12_4 && \
+      docker rm postgres_12_4 && \
+      echo "PostgreSQL Container killed"
+      ;;
+    stats )
+      docker stats postgres_12_4
+      ;;
+    * )
+      echo "Invalid option. Available options: start|stop|kill|stats"
+      ;;
+    esac
+  }
+  complete -W 'start stop kill stats' pg 2>/dev/null || \
+  echo "pg option: start stop kill stats. Example: pg start"
+fi
