@@ -4,7 +4,7 @@
 [[ ! -d "venv" ]] && python3 -m venv venv
 \. ./venv/bin/activate
 
-function de {
+function dje {
   find ./accounts/migrations  ! -name '__init__.py' -type f -exec rm -rf {} +
   rm -rf ./config/db.sqlite3 ./assets
   ./manage.py makemigrations && \
@@ -15,19 +15,19 @@ function de {
   ./manage.py runserver
 }
 
-function dp {
+function djp {
   ./manage.py dumpdata --exclude auth.permission --exclude contenttypes > db.json
 }
 
-function dr {
+function djr {
   ./manage.py runserver
 }
 
-function dm {
+function djm {
   ./manage.py makemigrations && ./manage.py migrate
 }
 
-function dx {
+function djx {
   deactivate 2>/dev/null
   unset -f de dd dr dm dx 2>/dev/null
 }
