@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect as redirect_url
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from accounts.models import User
@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 
 from accounts.forms import SignUpForm, LoginForm
 
+def redirect(request, url='dash:home'):
+    return redirect_url(request.GET.get('next', None) or url)
 
 def user_login(request):
-    redirect_to = request.GET.get('next', None) or 'dash:home'
     if not request.user.is_authenticated:
         form = LoginForm()
         if request.method == 'POST':
@@ -22,25 +23,23 @@ def user_login(request):
                         request.session.set_expiry(0)
                     login(request, user)
                     messages.info(request, f"You are now logged in as {username}")
-                    return redirect(redirect_to)
+                    return redirect(request)
         return render(request, 'auth/login.html', {'form': form})
-    return redirect(redirect_to)
+    return redirect(request)
 
 
 def user_signup(request):
-    redirect_to = request.GET.get('next', None) or 'dash:home'
     form = SignUpForm()
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect(redirect_to)
+            return redirect(request)
     return render(request, 'auth/signup.html', {'form': form})
 
 
 def user_logout(request):
-    redirect_to = request.GET.get('next', None) or 'dash:home'
     if request.user.is_authenticated:
         logout(request)
-    return redirect(redirect_to)
+    return redirect(request)
