@@ -2,12 +2,6 @@ body {
   font-size: .875rem;
 }
 
-.feather {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
-}
-
 /*
  * Sidebar
  */
@@ -101,11 +95,4 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
-
-#messageboard {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1040;
 }
