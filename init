@@ -5,8 +5,8 @@
 \. ./venv/bin/activate
 
 function dje {
-  find ./accounts/migrations  ! -name '__init__.py' -type f -exec rm -rf {} +
-  rm -rf ./config/db.sqlite3 ./assets
+  find ./accounts/migrations  ! -name '__init__.py' -type f -exec rm -rf {} + 2>/dev/null
+  rm -rf ./config/db.sqlite3 ./assets ./media ./staticfiles 2>/dev/null
   ./manage.py makemigrations && \
   ./manage.py migrate && \
   ( ./manage.py loaddata user.json  && \
