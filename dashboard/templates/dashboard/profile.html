@@ -1,4 +1,5 @@
 {% extends "./layouts/base.html" %}
+{% load static %}
 
 {% block title %} Profile {% endblock %}
 
@@ -8,9 +9,7 @@
 
 {% block content %}
 <p>
-  {% if user.picture %}
-  <img class="shadow-sm p-1 bg-white border rounded-circle" src="{{ user.picture.url }}" width="300" height="300">
-  {% endif %}
+  <img class="shadow-sm p-1 bg-white border rounded-circle" src="{% if user.picture %}{{ user.picture.url }}{% else %}{% static 'assets/img/profile-picture.png' %}{% endif %}" width="200" height="200">
 </p>
 <p>
   <strong>Username: </strong>
