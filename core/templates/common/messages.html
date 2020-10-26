@@ -1,7 +1,7 @@
 <div class="messageboard">
   {% if messages %}
   {% for message in messages %}
-  <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert" onloadend="dismissAlert(this)">
+  <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert" onloadend="dismissAlert(this)">
     {{ message }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

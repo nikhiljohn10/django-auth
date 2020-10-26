@@ -1,4 +1,5 @@
 from .default import *
+from django.contrib import messages
 
 DEBUG = True
 
@@ -32,6 +33,14 @@ MIDDLEWARE = [
 #         'PORT': '5432',
 #     }
 # }
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
