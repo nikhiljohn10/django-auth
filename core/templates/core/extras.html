@@ -1,7 +1,7 @@
 {% extends './base.html' %}
 {% block content %}
 <div class="jumbotron text-dark">
-  <h1 class="display-5">Enable Users</h1>
+  <h1 class="display-5">Users</h1>
   {% if users %}
   <div class="table-responsive mt-5">
     <table class="table">
@@ -11,7 +11,7 @@
           <th scope="col">First</th>
           <th scope="col">Last</th>
           <th scope="col">Handle</th>
-          <th scope="col">Action</th>
+          <th scope="col">Status/Action</th>
         </tr>
       </thead>
       <tbody>
@@ -21,7 +21,13 @@
           <td>{{ user.first_name }}</td>
           <td>{{ user.last_name }}</td>
           <td>@{{ user.username }}</td>
-          <td><a class="btn btn-success btn-sm" href="{% url 'auth:enable' username=user.username %}" role="button">Enable</a></td>
+          <td>
+            {% if not user.is_active %}
+              <a class="btn btn-success btn-sm" href="{% url 'auth:enable' username=user.username %}" role="button">Reactive</a>
+            {% else %}
+              Active
+            {% endif %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>
