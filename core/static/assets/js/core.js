@@ -4,5 +4,5 @@
   }
   setTimeout(function() {
     $(".alert-dismissible").alert('close')
-  }, 2000)
+  }, 4000)
 })()

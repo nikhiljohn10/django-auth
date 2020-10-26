@@ -11,3 +11,7 @@ div.messageboard {
   height: 16px;
   vertical-align: text-bottom;
 }
+
+.cover-container {
+  text-shadow: none !important;
+}
