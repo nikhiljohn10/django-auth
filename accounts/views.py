@@ -1,14 +1,20 @@
-from django.shortcuts import render, redirect as redirect_url
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout, views
-from accounts.forms import SignUpForm, LoginForm
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 
-# Custom redirection function to use next parameter from url
-def redirect(request, default='dash:home'):
-    return redirect_url(request.GET.get('next', None) or default)
+from accounts.forms import SignUpForm, LoginForm
+from accounts.models import User
 
+def user_enable(request, username):
+    user = User.objects.get(username=username)
+    print(user)
+    print(user.is_active)
+    user.is_active = True
+    user.save()
+    messages.success(request, 'Profile successfully enabled.')
+    return redirect('core:extras')
 
 class UserLogin(views.LoginView):
     template_name = 'auth/login.html'
@@ -20,7 +26,7 @@ class UserLogin(views.LoginView):
         if not self.request.POST.get('remember_me', None):
             self.request.session.set_expiry(0)
         messages.info(self.request, f"You are now logged in as {user}")
-        return redirect_url(self.get_success_url())
+        return redirect(self.get_success_url())
 
 class SignUpView(CreateView):
     form_class = SignUpForm

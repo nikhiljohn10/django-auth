@@ -20,8 +20,14 @@ def profile_disable(request):
     user = request.user
     user.is_active = False
     user.save()
-    messages.success(request, 'Profile successfully disabled.')
-    # logout(request, user)
+    messages.error(request, 'Profile successfully disabled.')
+    return redirect('core:home')
+
+@login_required
+def profile_delete(request):
+    user = request.user
+    user.delete()
+    messages.success(request, 'Profile successfully deleted.')
     return redirect('core:home')
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):

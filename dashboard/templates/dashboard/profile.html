@@ -7,7 +7,7 @@
 <a role="button" class="btn btn-sm btn-outline-secondary mr-2" href="{% url 'dash:profile_edit' %}">Edit</a>
 <div class="btn-group">
   <a role="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#DiableModalLabel">Disable</a>
-  <a role="button" class="btn btn-sm btn-outline-danger" href="{% url 'dash:profile_edit' %}">Delete</a>
+  <a role="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#DeleteModalLabel">Delete</a>
 </div>
 {% endblock %}
 
@@ -66,6 +66,27 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <a role="button" class="btn btn-danger" href="{% url 'dash:profile_disable' %}">Disable</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE DIALOG BOX -->
+<div class="modal fade" id="DeleteModalLabel" tabindex="-1" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Delete your account?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You are about to delete your account and you will not be able to login back. Do you wish to continue?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a role="button" class="btn btn-danger" href="{% url 'dash:profile_delete' %}">Delete</a>
       </div>
     </div>
   </div>
