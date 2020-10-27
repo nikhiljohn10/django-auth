@@ -42,8 +42,10 @@
     </h6>
     <ul class="nav flex-column mb-2 ml-4">
 
-      {% url 'core:home' as url %}
-      {% include 'dashboard/common/sidebar-item.html' with name='Home' icon='home' %}
+      {% if user.is_staff %}
+        {% url 'dash:users' as url %}
+        {% include 'dashboard/common/sidebar-item.html' with name='Users' icon='users' %}
+      {% endif %}
 
     </ul>
   </div>

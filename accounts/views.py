@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout, views, authenticate
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.sessions.models import Session
 from django.views.generic.edit import CreateView
 
 from accounts.forms import SignUpForm, LoginForm
 from accounts.models import User
+import json
 
+from django.core import serializers
+from django.http import JsonResponse
 
 class UserLogin(views.LoginView):
     template_name = 'auth/login.html'
@@ -40,43 +44,59 @@ def user_manage_permission(user, username):
             return True
     return False
 
+@login_required
+@permission_required("is_staff", login_url='/dashboard/')
+def user_force_logout(request, username):
+    user = User.objects.get(username=username)
+    sessions = [s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == str(user.id)]
+    print(sessions)
+    return redirect('dash:users')
 
+@login_required
 def user_disable(request, username):
     if user_manage_permission(request.user, username):
         user = User.objects.get(username=username)
         user.is_active = False
         user.save()
         messages.error(request, 'Profile successfully disabled.')
-        return redirect('core:extras')
     else:
         messages.error(
             request, 'You are not allowed to perform this operation.')
-    return redirect('dash:profile')
+    if request.user.is_staff:
+        return redirect('dash:users')
+    else:
+        return redirect('dash:profile')
 
 
+@login_required
 def user_enable(request, username):
     if user_manage_permission(request.user, username):
         user = User.objects.get(username=username)
         user.is_active = True
         user.save()
         messages.success(request, 'Profile successfully enabled.')
-        return redirect('core:extras')
     else:
         messages.error(
             request, 'You are not allowed to perform this operation.')
-    return redirect('dash:profile')
+    if request.user.is_staff:
+        return redirect('dash:users')
+    else:
+        return redirect('dash:profile')
 
 
+@login_required
 def user_delete(request, username):
     if user_manage_permission(request.user, username):
         user = User.objects.get(username=username)
         user.delete()
         messages.error(request, 'Profile successfully deleted.')
-        return redirect('core:extras')
     else:
         messages.error(
             request, 'You are not allowed to perform this operation.')
-    return redirect('dash:profile')
+    if request.user.is_staff:
+        return redirect('dash:users')
+    else:
+        return redirect('dash:profile')
 
 
 user_login = UserLogin.as_view()
