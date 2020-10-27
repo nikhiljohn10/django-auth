@@ -9,11 +9,11 @@ from accounts.models import User
 
 @login_required
 def home(request):
-    return render(request, 'dashboard/home.html')
+    return render(request, 'dashboard/pages/home.html')
 
 @login_required
 def profile(request):
-    return render(request, 'dashboard/profile.html')
+    return render(request, 'dashboard/pages/profile.html')
 
 @login_required
 def profile_disable(request):
@@ -32,7 +32,7 @@ def profile_delete(request):
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     model = User
-    template_name = 'dashboard/profile_edit.html'
+    template_name = 'dashboard/pages/profile_edit.html'
     success_url = '/dashboard/profile'
     form_class = ProfileForm
 
