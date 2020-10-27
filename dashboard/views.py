@@ -1,42 +1,38 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
 
 from dashboard.forms import ProfileForm
 from accounts.models import User
 
+
 @login_required
 def home(request):
-    return render(request, 'dashboard/home.html')
+    return render(request, 'dashboard/pages/home.html')
+
 
 @login_required
 def profile(request):
-    return render(request, 'dashboard/profile.html')
+    return render(request, 'dashboard/pages/profile.html')
+
 
 @login_required
-def profile_disable(request):
-    user = request.user
-    user.is_active = False
-    user.save()
-    messages.error(request, 'Profile successfully disabled.')
-    return redirect('core:home')
+@permission_required("is_staff", login_url='/dashboard/')
+def users(request):
+    users = User.objects.filter(is_staff=False)
+    return render(request, 'dashboard/pages/users.html', {'users': users})
 
-@login_required
-def profile_delete(request):
-    user = request.user
-    user.delete()
-    messages.success(request, 'Profile successfully deleted.')
-    return redirect('core:home')
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
     model = User
-    template_name = 'dashboard/profile_edit.html'
+    template_name = 'dashboard/pages/profile_edit.html'
     success_url = '/dashboard/profile'
     form_class = ProfileForm
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(User, pk=self.request.user.pk)
+
 
 profile_edit = ProfileEditView.as_view()

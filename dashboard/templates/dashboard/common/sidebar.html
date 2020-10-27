@@ -19,10 +19,16 @@
       </h5>
     </div>
     <hr>
-    <ul class="nav flex-column">
+
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+      <div class="d-flex align-items-center text-muted">
+        <span data-feather="home" class="mr-2"></span>Home
+      </div>
+    </h6>
+    <ul class="nav flex-column mb-2 ml-4">
 
       {% url 'dash:home' as url %}
-      {% include 'dashboard/common/sidebar-item.html' with name='Dashboard' icon='home' %}
+      {% include 'dashboard/common/sidebar-item.html' with name='Dashboard' icon='monitor' %}
 
       {% url 'dash:profile' as url %}
       {% include 'dashboard/common/sidebar-item.html' with name='Profile' icon='user' %}
@@ -30,15 +36,16 @@
     </ul>
 
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-      <span>Other Link</span>
-      <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-        <span data-feather="plus-circle"></span>
-      </a>
+      <div class="d-flex align-items-center text-muted">
+        <span data-feather="settings" class="mr-2"></span>Settings
+      </div>
     </h6>
-    <ul class="nav flex-column mb-2">
+    <ul class="nav flex-column mb-2 ml-4">
 
-      {% url 'core:home' as url %}
-      {% include 'dashboard/common/sidebar-item.html' with name='Home' icon='home' %}
+      {% if user.is_staff %}
+        {% url 'dash:users' as url %}
+        {% include 'dashboard/common/sidebar-item.html' with name='Users' icon='users' %}
+      {% endif %}
 
     </ul>
   </div>
