@@ -7,34 +7,6 @@ from django.views.generic.edit import CreateView
 from accounts.forms import SignUpForm, LoginForm
 from accounts.models import User
 
-def user_disable(request, username):
-    if request.user.is_staff or request.user.username == username:
-        user = User.objects.get(username=username)
-        user.is_active = False
-        user.save()
-        messages.error(request, 'Profile successfully disabled.')
-    else:
-        messages.error(request, 'You have to be admin to perform this operation.')
-    return redirect('core:extras')
-
-def user_enable(request, username):
-    if request.user.is_staff or request.user.username == username:
-        user = User.objects.get(username=username)
-        user.is_active = True
-        user.save()
-        messages.success(request, 'Profile successfully enabled.')
-    else:
-        messages.error(request, 'You have to be admin to perform this operation.')
-    return redirect('core:extras')
-
-def user_delete(request, username):
-    if request.user.is_staff or request.user.username == username:
-        user = User.objects.get(username=username)
-        user.delete()
-        messages.error(request, 'Profile successfully deleted.')
-    else:
-        messages.error(request, 'You have to be admin to perform this operation.')
-    return redirect('core:extras')
 
 class UserLogin(views.LoginView):
     template_name = 'auth/login.html'
@@ -48,6 +20,7 @@ class UserLogin(views.LoginView):
         messages.info(self.request, f"You are now logged in as {user}")
         return redirect(self.get_success_url())
 
+
 class SignUpView(CreateView):
     form_class = SignUpForm
     template_name = 'auth/signup.html'
@@ -56,6 +29,55 @@ class SignUpView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('core:home')
+
+
+def user_manage_permission(user, username):
+    if not user.is_staff:
+        if user.username == username:
+            return True
+    else:
+        if user.username != username:
+            return True
+    return False
+
+
+def user_disable(request, username):
+    if user_manage_permission(request.user, username):
+        user = User.objects.get(username=username)
+        user.is_active = False
+        user.save()
+        messages.error(request, 'Profile successfully disabled.')
+        return redirect('core:extras')
+    else:
+        messages.error(
+            request, 'You are not allowed to perform this operation.')
+    return redirect('dash:profile')
+
+
+def user_enable(request, username):
+    if user_manage_permission(request.user, username):
+        user = User.objects.get(username=username)
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Profile successfully enabled.')
+        return redirect('core:extras')
+    else:
+        messages.error(
+            request, 'You are not allowed to perform this operation.')
+    return redirect('dash:profile')
+
+
+def user_delete(request, username):
+    if user_manage_permission(request.user, username):
+        user = User.objects.get(username=username)
+        user.delete()
+        messages.error(request, 'Profile successfully deleted.')
+        return redirect('core:extras')
+    else:
+        messages.error(
+            request, 'You are not allowed to perform this operation.')
+    return redirect('dash:profile')
+
 
 user_login = UserLogin.as_view()
 user_signup = SignUpView.as_view()

@@ -65,7 +65,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a role="button" class="btn btn-danger" href="{% url 'dash:profile_disable' %}">Disable</a>
+        <a role="button" class="btn btn-danger" href="{% url 'auth:disable' username=user.username %}">Disable</a>
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a role="button" class="btn btn-danger" href="{% url 'dash:profile_delete' %}">Delete</a>
+        <a role="button" class="btn btn-danger" href="{% url 'auth:delete' username=user.username %}">Delete</a>
       </div>
     </div>
   </div>
