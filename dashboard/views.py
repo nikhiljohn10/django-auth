@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 from dashboard.forms import ProfileForm
 from accounts.models import User
+from accounts.tools import activater
 
 
 @login_required
@@ -22,6 +23,8 @@ def profile(request):
 @permission_required("is_staff", login_url='/dashboard/')
 def users(request):
     users = User.objects.filter(is_staff=False)
+    for user in users:
+        user.hashed = activater.make_token(user)
     return render(request, 'dashboard/pages/users.html', {'users': users})
 
 

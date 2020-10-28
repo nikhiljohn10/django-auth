@@ -10,4 +10,5 @@ urlpatterns = [
     path('enable/<username>', views.user_enable, name='enable'),
     path('disable/<username>', views.user_disable, name='disable'),
     path('delete/<username>', views.user_delete, name='delete'),
+    path('verify/<username>/<token>', views.user_verify_email, name='verify_email'),
 ]

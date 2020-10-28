@@ -7,10 +7,8 @@ from django.views.generic.edit import CreateView
 
 from accounts.forms import SignUpForm, LoginForm
 from accounts.models import User
-import json
+from accounts.tools import activater
 
-from django.core import serializers
-from django.http import JsonResponse
 
 class UserLogin(views.LoginView):
     template_name = 'auth/login.html'
@@ -31,6 +29,7 @@ class SignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
+        print(activater.make_token(user))
         login(self.request, user)
         return redirect('core:home')
 
@@ -44,13 +43,27 @@ def user_manage_permission(user, username):
             return True
     return False
 
+
 @login_required
 @permission_required("is_staff", login_url='/dashboard/')
 def user_force_logout(request, username):
     user = User.objects.get(username=username)
-    sessions = [s.delete() for s in Session.objects.all() if s.get_decoded().get('_auth_user_id') == str(user.id)]
+    sessions = [s.delete() for s in Session.objects.all()
+                if s.get_decoded().get('_auth_user_id') == str(user.id)]
     print(sessions)
     return redirect('dash:users')
+
+
+@login_required
+@permission_required("is_staff", login_url='/dashboard/')
+def user_verify_email(request, username, token):
+    user = User.objects.get(username=username)
+    if activater.check_token(user, token):
+        print(user, "is verified")
+        user.email_verified = True
+        user.save()
+    return redirect('dash:users')
+
 
 @login_required
 def user_disable(request, username):
