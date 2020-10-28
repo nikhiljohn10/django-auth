@@ -24,7 +24,10 @@ def profile(request):
 def users(request):
     users = User.objects.filter(is_staff=False)
     for user in users:
-        user.hashed = activater.make_token(user)
+        if not user.email_verified:
+            user.hashed = activater.make_token(user)
+        else:
+            user.hashed = "Verified"
     return render(request, 'dashboard/pages/users.html', {'users': users})
 
 
