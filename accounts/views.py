@@ -1,14 +1,32 @@
-from django.shortcuts import render, redirect
+from django.conf import settings
 from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
 from django.contrib.auth import login, logout, views, authenticate
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.sessions.models import Session
 from django.views.generic.edit import CreateView
+from django.contrib.sessions.models import Session
+from django.contrib.auth.decorators import login_required, permission_required
 
+from accounts.tools import activater, mailer
 from accounts.forms import SignUpForm, LoginForm
 from accounts.models import User
-from accounts.tools import activater
 
+
+def gmail(request):
+    return redirect(mailer.auth_uri)
+
+def gmail_verify(request):
+    code = request.GET.get('code','')
+    if code:
+        mailer.verify(request, code)
+    return redirect('core:home')
+
+def gmail_test(request):
+    subject = "Test Message from Django"
+    message = "This is the message I want to send"
+    receivers = ['nikhiljohn1010@gmail.com', 'ceo@jwaladiamonds.com']
+    mailer.send_message(message, subject, receivers)
+    return redirect('core:home')
 
 class UserLogin(views.LoginView):
     template_name = 'auth/login.html'
