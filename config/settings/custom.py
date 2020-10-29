@@ -23,8 +23,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-GMAIL_USER = 'ceo@jwala.diamonds'
-EMAIL_HOST_PASSWORD = 'dqwfiqajtsvtyflp'
+# GMAIL_USER = ''
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = GMAIL_USER
+# EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = GMAIL_USER
+SERVER_EMAIL = GMAIL_USER
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
