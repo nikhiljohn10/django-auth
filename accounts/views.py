@@ -22,10 +22,13 @@ def gmail_verify(request):
     return redirect('core:home')
 
 def gmail_test(request):
-    subject = "Test Message from Django"
-    message = "This is the message I want to send"
-    receivers = ['nikhiljohn1010@gmail.com', 'ceo@jwaladiamonds.com']
-    mailer.send_message(message, subject, receivers)
+    if hasattr(mailer, 'service'):
+        subject = "Test Message from Django"
+        message = "This is the message I want to send"
+        receivers = ['nikhiljohn1010@gmail.com', 'ceo@jwaladiamonds.com']
+        mailer.send_message(message, subject, receivers)
+    else:
+        return redirect('auth:gmail')
     return redirect('core:home')
 
 class UserLogin(views.LoginView):

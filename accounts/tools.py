@@ -1,6 +1,5 @@
 import six
 from django.conf import settings
-from django.core import serializers
 from googleapiclient.discovery import build
 from email.mime.text import MIMEText
 from base64 import urlsafe_b64encode
@@ -22,9 +21,9 @@ class Gmail:
     def __init__(self):
         self.user = settings.GMAIL_USER or None
         self.flow = InstalledAppFlow.from_client_secrets_file(
-            client_secrets_file='client_secret.apps.googleusercontent.com.json',
-            scopes=['https://www.googleapis.com/auth/gmail.send'],
-            redirect_uri='http://mac.pro:8000/auth/gmail/verify')
+            client_secrets_file=settings.GMAIL_SECRET,
+            scopes=settings.GMAIL_SCOPES,
+            redirect_uri=settings.GMAIL_REDIRECT)
         auth_uri, auth_state = self.flow.authorization_url()
         if auth_uri and auth_state:
             self.auth_uri = auth_uri
@@ -34,28 +33,26 @@ class Gmail:
         self.flow.fetch_token(code=code)
         self.credentials = self.flow.credentials
         self.session = self.flow.authorized_session()
-        request.session['credentials'] = {
-            'token': self.credentials.token,
-            'refresh_token': self.credentials.refresh_token,
-            'token_uri': self.credentials.token_uri,
-            'client_id': self.credentials.client_id,
-            'client_secret': self.credentials.client_secret,
-            'scopes': self.credentials.scopes}
         self.service = build('gmail', 'v1', credentials=self.credentials)
 
-    def create_message(self, message_text, subject, receivers):
+    def create_message(self, subject, message_text, from_email, recipient_list):
         message = MIMEText(message_text)
-        message['to'] = ', '.join(receivers)
-        message['from'] = self.user
+        message['to'] = ', '.join(recipient_list)
+        message['from'] = from_email
         message['subject'] = subject
         raw = urlsafe_b64encode(message.as_bytes()).decode()
         return {'raw': raw}
 
-    def send_message(self, message, subject, receivers):
+    def send_mail(self, subject, message, recipient_list):
         try:
-            body = self.create_message(message, subject, receivers)
+            body = self.create_message(
+                subject,
+                message,
+                self.user,
+                recipient_list)
             sent_message = (self.service.users().messages().send(
-                userId="me", body=body).execute())
+                userId="me",
+                body=body).execute())
             print('Message sent with id: %s' % sent_message['id'])
         except HttpError as error:
             print('An error occurred: %s' % error)
