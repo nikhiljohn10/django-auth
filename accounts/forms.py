@@ -9,6 +9,11 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ['username', 'first_name', 'last_name',
                   'email', 'bio', 'birthday', 'password1', 'password2']
+                  
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].required = True
+
 
 
 class LoginForm(AuthenticationForm):

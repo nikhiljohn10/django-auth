@@ -13,5 +13,4 @@ urlpatterns = [
     path('verify/<username>/<token>', views.user_verify_email, name='verify_email'),
     path('gmail/', views.gmail, name='gmail'),
     path('gmail/verify', views.gmail_verify, name='gmail_verify'),
-    path('gmail/test', views.gmail_test, name='gmail_test'),
 ]

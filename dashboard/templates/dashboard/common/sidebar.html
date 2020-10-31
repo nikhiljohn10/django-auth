@@ -43,8 +43,13 @@
     <ul class="nav flex-column mb-2 ml-4">
 
       {% if user.is_staff %}
+
         {% url 'dash:users' as url %}
         {% include 'dashboard/common/sidebar-item.html' with name='Users' icon='users' %}
+
+        {% url 'dash:gmail' as url %}
+        {% include 'dashboard/common/sidebar-item.html' with name='Gmail' icon='mail' %}
+
       {% endif %}
 
     </ul>

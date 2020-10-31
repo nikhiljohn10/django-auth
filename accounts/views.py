@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -12,24 +13,22 @@ from accounts.forms import SignUpForm, LoginForm
 from accounts.models import User
 
 
+
+@login_required
+@permission_required("is_staff", login_url='/dashboard/')
 def gmail(request):
+    request.session['oauth_state'] = mailer.auth_state
     return redirect(mailer.auth_uri)
 
+
+@login_required
+@permission_required("is_staff", login_url='/dashboard/')
 def gmail_verify(request):
     code = request.GET.get('code','')
-    if code:
-        mailer.verify(request, code)
-    return redirect('core:home')
-
-def gmail_test(request):
-    if hasattr(mailer, 'service'):
-        subject = "Test Message from Django"
-        message = "This is the message I want to send"
-        receivers = ['nikhiljohn1010@gmail.com', 'ceo@jwaladiamonds.com']
-        mailer.send_message(message, subject, receivers)
-    else:
-        return redirect('auth:gmail')
-    return redirect('core:home')
+    state = request.GET.get('state','')
+    if code and state == request.session['oauth_state']:
+        mailer.verify(code)
+    return redirect('dash:gmail')
 
 class UserLogin(views.LoginView):
     template_name = 'auth/login.html'
@@ -49,9 +48,19 @@ class SignUpView(CreateView):
     template_name = 'auth/signup.html'
 
     def form_valid(self, form):
-        user = form.save()
-        print(activater.make_token(user))
-        login(self.request, user)
+        if mailer.activated:
+            user = form.save()
+            mailer.send_mail(
+                "Django Verification Code",
+                "Hi "+str(user)+",\nClick this link to activate: " +
+                    reverse('auth:verify_email', args=(
+                        user, activater.make_token(user))),
+                [user.email])
+            login(self.request, user)
+        else:
+            messages.error(self.request,
+                "Gmail is not activate. Contact site administrator.")
+            return redirect('auth:signup')
         return redirect('core:home')
 
 
@@ -75,8 +84,6 @@ def user_force_logout(request, username):
     return redirect('dash:users')
 
 
-@login_required
-@permission_required("is_staff", login_url='/dashboard/')
 def user_verify_email(request, username, token):
     user = User.objects.get(username=username)
     if activater.check_token(user, token):

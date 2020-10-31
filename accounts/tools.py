@@ -25,15 +25,17 @@ class Gmail:
             scopes=settings.GMAIL_SCOPES,
             redirect_uri=settings.GMAIL_REDIRECT)
         auth_uri, auth_state = self.flow.authorization_url()
+        self.activated = False
         if auth_uri and auth_state:
             self.auth_uri = auth_uri
             self.auth_state = auth_state
 
-    def verify(self, request, code):
+    def verify(self, code):
         self.flow.fetch_token(code=code)
         self.credentials = self.flow.credentials
-        self.session = self.flow.authorized_session()
         self.service = build('gmail', 'v1', credentials=self.credentials)
+        self.activated = True
+
 
     def create_message(self, subject, message_text, from_email, recipient_list):
         message = MIMEText(message_text)
@@ -44,19 +46,21 @@ class Gmail:
         return {'raw': raw}
 
     def send_mail(self, subject, message, recipient_list):
-        try:
-            body = self.create_message(
-                subject,
-                message,
-                self.user,
-                recipient_list)
-            sent_message = (self.service.users().messages().send(
-                userId="me",
-                body=body).execute())
-            print('Message sent with id: %s' % sent_message['id'])
-        except HttpError as error:
-            print('An error occurred: %s' % error)
-
+        if self.activated:
+            try:
+                body = self.create_message(
+                    subject,
+                    message,
+                    self.user,
+                    recipient_list)
+                sent_message = (self.service.users().messages().send(
+                    userId="me",
+                    body=body).execute())
+                print('Message sent with id: %s' % sent_message['id'])
+            except HttpError as error:
+                print('An error occurred: %s' % error)
+        else:
+            print("Gmail not activated")
 
 activater = AccountActivation()
 mailer = Gmail()
