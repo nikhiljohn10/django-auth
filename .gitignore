@@ -111,6 +111,7 @@ env.bak/
 venv.bak/
 assets/*
 !static/*
+gmail_client_secret.json
 
 # Spyder project settings
 .spyderproject

@@ -4,9 +4,15 @@
 [[ ! -d "venv" ]] && python3 -m venv venv
 \. ./venv/bin/activate
 
+function djsecret {
+  echo "DJANGO_SECRET=$(python -c 'from django.core.management.utils import get_random_secret_key;print(get_random_secret_key())')"
+}
+
 function dje {
   find ./accounts/migrations  ! -name '__init__.py' -type f -exec rm -rf {} + 2>/dev/null
   rm -rf ./config/db.sqlite3 ./assets ./media ./staticfiles 2>/dev/null
+  cp ./.env.example ./.env
+  djsecret >> ./.env
   ./manage.py makemigrations && \
   ./manage.py migrate && \
   ( ./manage.py loaddata user.json  && \

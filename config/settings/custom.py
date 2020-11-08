@@ -1,9 +1,6 @@
 from .default import *
 from django.contrib import messages
 
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
     'crispy_forms',
@@ -22,6 +19,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+GMAIL_USER = env('GMAIL_USER', default='example@gmail.com')
+GMAIL_SECRET = env('GMAIL_SECRET', default='')
+GMAIL_SCOPES = ['https://www.googleapis.com/auth/gmail.send', ]
+GMAIL_REDIRECT = env('GMAIL_REDIRECT', default='http://localhost')
 
 # DATABASES = {
 #     'default': {
